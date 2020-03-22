@@ -71,8 +71,7 @@ while count < len(url):
                 'OPEN','HIGH','LOW','CLOSE','OPEN_INT','CHG_IN_OI','COI_OI','COI_CHOI','COUNT']]
                 count = count + 1
                 print('Data receivied for {} Trading Day'.format(count))           
-              
-
+             
 all.to_csv('Cumulative.csv',index = True)
 
 NIFTYDATA = pd.read_csv('Cumulative.csv')
