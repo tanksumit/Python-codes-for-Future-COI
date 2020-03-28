@@ -177,9 +177,9 @@ def Fetch_OI_Data(datas,Max_Pain_DF):
             Tries +=1
             sleep(10)
             continue   
-    if Tries >= Max_Retries:
-        print('Max retries exceeded. No new Data at time {0}'.format(datetime.now().strftime('%d-%m-%y-%H:%M')))
-        return datas, Max_Pain_DF
+        if Tries >= Max_Retries:
+            print('Max retries exceeded. No new Data at time {0}'.format(datetime.now().strftime('%d-%m-%y-%H:%M')))
+            return datas, Max_Pain_DF
 
 def Main():
     global Data
@@ -189,7 +189,6 @@ def Main():
         print('Error in reading Data: {0}'.format(error))
         Data = []
     
-
     if Data:
         datas = pd.DataFrame()
         for item in Data: 
@@ -203,10 +202,16 @@ def Main():
     except Exception as error:
         print('Error in reading Data: {0}'.format(error))
         Max_Pain = []
-        Max_Pain_DF = pd.DataFrame() 
+
+    if Max_Pain:
+        Max_Pain_DF = pd.DataFrame()
+        Max_Pain_DF = pd.DataFrame().from_dict(Max_Pain)
+    else:
+        Max_Pain_DF = pd.DataFrame()
+ 
 
     timeframe = 3
-    while time(9, 15) <= datetime.now().time() <= time(20, 31): 
+    while time(9, 15) <= datetime.now().time() <= time(15, 31): 
         timenow = datetime.now()
         check = True if timenow.minute/timeframe in list (np.arange(0.0, 20.0)) else False #enter time interval of our choice under timeframe variable. 
         #based on that decide  arnage (20 is decided based on how much time interval you want. if interval of 5 the it will be 12)
@@ -221,11 +226,11 @@ def Main():
                 'lastPrice','change','pChange','impliedVolatility','askPrice','askQty','bidQty','bidprice','totalBuyQuantity','totalSellQuantity','totalTradedVolume']]
                 wb.api.RefreshAll()
                 waitsecs = int((nextscan - datetime.now()).seconds) 
-                print('wait for {0} seconds',format(waitsecs))
+                print('wait for {0} seconds'.format(waitsecs))
                 sleep(waitsecs) if waitsecs > 0 else sleep(0)
             else:
                 print('No data received')
-                sleep(15)
+                sleep(10)
 
 if __name__ == '__main__':
     Main()
