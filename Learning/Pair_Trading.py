@@ -7,6 +7,7 @@ import xlwings as xw
 import os
 import numpy as np
 
+
 headers={'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36'}
 
 Symbol=["NIFTY","BANKNIFTY"]
@@ -20,6 +21,7 @@ wb = xw.Book(Excel_File)
 #Data File 
 
 Data_Sheet = wb.sheets("Data_Sheet")
+# OI_Sheet = wb.sheets("OI_Sheet")
 
 def get_data():
       NFBNF={}
@@ -46,7 +48,7 @@ def get_data():
 
 
 def Trading_opporunity():
-      while time(9, 00) <= datetime.now().time() <= time(19, 31): 
+      while time(9, 00) <= datetime.now().time() <= time(15, 31): 
             alldata=[]
             sleep_time = 10
             while True:
@@ -82,6 +84,7 @@ def Trading_opporunity():
                         for i in alldata:
                               fd=pd.DataFrame(i)
                               Data_Sheet.range("A1").options(index=False,headers=True).value = fd
+                        # OI_Sheet.range("A1").options(index=True,headers=True).value = get_oi()
                   except Exception as error:
                         print('error {0}'.format(error))
                         print()
@@ -89,5 +92,9 @@ def Trading_opporunity():
                         continue
                   finally:
                         print('Program Ends No Trade Opporunity Found till',datetime.now().strftime('%H:%M:%S'))
-                        print()      
+                        print()
+                              
+
+
 Trading_opporunity()
+
