@@ -20,11 +20,12 @@ OI_Sheet = wb.sheets("OI_Sheet")
 OI_CH = wb.sheets("OI_CH")
 CEPE_ALL = wb.sheets("CEPE_All")
 
+#Folder path where you want to store EOD files
 File_path = "D:\\Automate the Borring Stuff\\Learning\\Files"
 
 #OI_Data_File (oi_filename)
 
-Data_File = os.path.join(File_path,"OI_Data_Records_{0}.csv".format(datetime.now().strftime('%d%m%y')))
+Data_File = os.path.join(File_path,"OI_Data_Records_{0}.csv".format(datetime.now().strftime('%d-%m-%y-%H-%M')))
 
 
 def get_oi():
@@ -94,7 +95,7 @@ def all_data():
       Time_now = datetime.now().time() 
       while  Start_Time <= datetime.now().time() <= End_Time: 
             alldata=pd.DataFrame()
-            sleep_time = 30
+            sleep_time = 170
             while True:
                   print('Program Starts to check data at',datetime.now().strftime('%H:%M:%S'))
                   print()
@@ -149,7 +150,7 @@ def all_data():
                         continue
                         print()
 
-                  if Time_now < End_Time:
+                  if Time_now > End_Time:
                         newdata = pd.concat([alldata,CEDF, PEDF])
                         newdata.to_csv(Data_File,index = True, header=True)
                         break

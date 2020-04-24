@@ -18,7 +18,7 @@ BANKNIFTYSHEET = wb.sheets("DATA_BN")
 
 
 To_Date=date.today().strftime('%d-%m-%Y')
-No_of_Days=135
+No_of_Days=35
 FDate=date.today()
 Fm_Date=FDate-timedelta(days=No_of_Days)
 From_Date=Fm_Date.strftime('%d-%m-%Y')
